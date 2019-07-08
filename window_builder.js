@@ -11,8 +11,18 @@ class DOM42 {
 	}
 }
 
-function $loadWindow(win) {
-	return new DOM42(win);
+/*
+Instead of var root = new DOM42($window({...}));
+you can do var root = $window42({...});
+
+but if you want to have access to your window
+as $window and DOM42 object, do this:
+
+var win = $window({...});
+var root = new DOM42(win);
+*/
+function $window42(a) {
+	return new DOM42($window(a));
 }
 
 //All widgets go here
