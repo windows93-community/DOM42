@@ -1,3 +1,4 @@
+//DOM42 objects enable adding widgets to windows
 class DOM42 {
 	constructor(win) {
 		this.win = win;
@@ -14,6 +15,7 @@ function $loadWindow(win) {
 	return new DOM42(win);
 }
 
+//All widgets go here
 var $widget = {
 	Button(text) {
 		var elem = document.createElement('button');
@@ -35,13 +37,6 @@ var $widget = {
 				}
 			},
 			setStyle(s) {
-				s = s.split(';');
-				var style = {};
-				for(var i in s) {
-					if(s[i] != '') {
-						style[s[i].split('=')[0]] = s[i].split('=')[1];
-					}
-				}
 				this.elem.style = {...this.elem.style, ...style};
 			}
 		}
@@ -60,18 +55,40 @@ var $widget = {
 				this.elem.style.left = x.toString() + 'px';
 			},
 			setStyle(s) {
-				s = s.split(';');
-				var style = {};
-				for(var i in s) {
-					if(s[i] != '') {
-						style[s[i].split('=')[0]] = s[i].split('=')[1];
-					}
-				}
 				this.elem.style = {...this.elem.style, ...style};
 			}
 		}
 	},
-	Entry(type, size) {
+	Entry(size) {
+		var elem = document.createElement('textarea');
+		if(size != undefined) {
+			elem.style.fontSize = size.toString() + 'px';
+		}
+		return {
+			elem: elem,
+			setPosition(x, y, w, h) {
+				this.elem.style.position = 'absolute';
+				this.elem.style.top = y.toString() + 'px';
+				this.elem.style.left = x.toString() + 'px';
+				if(w != undefined) {
+					this.elem.style.width = w.toString() + 'px';
+				}
+				if(h != undefined) {
+					this.elem.style.height = h.toString() + 'px';
+				}
+			},
+			setText(text) {
+				this.elem.value = text;
+			},
+			getText(text) {
+				return this.elem.value;
+			},
+			setStyle(s) {
+				this.elem.style = {...this.elem.style, ...style};
+			}
+		}
+	},
+	Input(type, size) {
 		var elem = document.createElement('input');
 		if(type != undefined) {
 			elem.type = type;
@@ -81,10 +98,16 @@ var $widget = {
 		}
 		return {
 			elem: elem,
-			setPosition(x, y) {
+			setPosition(x, y, w, h) {
 				this.elem.style.position = 'absolute';
 				this.elem.style.top = y.toString() + 'px';
 				this.elem.style.left = x.toString() + 'px';
+				if(w != undefined) {
+					this.elem.style.width = w.toString() + 'px';
+				}
+				if(h != undefined) {
+					this.elem.style.height = h.toString() + 'px';
+				}
 			},
 			setText(text) {
 				this.elem.value = text;
@@ -93,13 +116,6 @@ var $widget = {
 				return this.elem.value;
 			},
 			setStyle(s) {
-				s = s.split(';');
-				var style = {};
-				for(var i in s) {
-					if(s[i] != '') {
-						style[s[i].split('=')[0]] = s[i].split('=')[1];
-					}
-				}
 				this.elem.style = {...this.elem.style, ...style};
 			}
 		}
