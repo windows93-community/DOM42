@@ -27,6 +27,22 @@ function $window42(a) {
 
 //All widgets go here
 var $widget = {
+	msr: 'px',
+	//positionBy("pixel") = size in pixels, positionBy("relative") = size relative to size of window (100 = window height / width)
+	positionBy(t) {
+		ptype = {'pixel': 'px', 'relative': '%'};
+		$widget.msr = ptype[t];
+	},
+	Export() {
+		/*
+		This function makes all $widgets global
+		so instead of $widget.Button you can do
+		just Button
+		*/
+		for(var item in this) {
+			eval(item + '=' + '$widget.' + item);
+		}
+	},
 	Button(text) {
 		var elem = document.createElement('button');
 		elem.innerText = text;
@@ -37,13 +53,13 @@ var $widget = {
 			},
 			setPosition(x, y, w, h) {
 				this.elem.style.position = 'absolute';
-				this.elem.style.top = y.toString() + 'px';
-				this.elem.style.left = x.toString() + 'px';
+				this.elem.style.top = y.toString() + $widget.msr;
+				this.elem.style.left = x.toString() + $widget.msr;
 				if(w != undefined) {
-					this.elem.style.width = w.toString() + 'px';
+					this.elem.style.width = w.toString() + $widget.msr;
 				}
 				if(h != undefined) {
-					this.elem.style.height = h.toString() + 'px';
+					this.elem.style.height = h.toString() + $widget.msr;
 				}
 			},
 			setStyle(s) {
@@ -54,15 +70,15 @@ var $widget = {
 	Label(text, size) {
 		var elem = document.createElement('p');
 		if(size != undefined) {
-			elem.style.fontSize = size.toString() + 'px';
+			elem.style.fontSize = size.toString() + $widget.msr;
 		}
 		elem.innerText = text;
 		return {
 			elem: elem,
 			setPosition(x, y) {
 				this.elem.style.position = 'absolute';
-				this.elem.style.top = y.toString() + 'px';
-				this.elem.style.left = x.toString() + 'px';
+				this.elem.style.top = y.toString() + $widget.msr;
+				this.elem.style.left = x.toString() + $widget.msr;
 			},
 			setStyle(s) {
 				this.elem.style = {...this.elem.style, ...style};
@@ -72,19 +88,19 @@ var $widget = {
 	Entry(size) {
 		var elem = document.createElement('textarea');
 		if(size != undefined) {
-			elem.style.fontSize = size.toString() + 'px';
+			elem.style.fontSize = size.toString() + $widget.msr;
 		}
 		return {
 			elem: elem,
 			setPosition(x, y, w, h) {
 				this.elem.style.position = 'absolute';
-				this.elem.style.top = y.toString() + 'px';
-				this.elem.style.left = x.toString() + 'px';
+				this.elem.style.top = y.toString() + $widget.msr;
+				this.elem.style.left = x.toString() + $widget.msr;
 				if(w != undefined) {
-					this.elem.style.width = w.toString() + 'px';
+					this.elem.style.width = w.toString() + $widget.msr;
 				}
 				if(h != undefined) {
-					this.elem.style.height = h.toString() + 'px';
+					this.elem.style.height = h.toString() + $widget.msr;
 				}
 			},
 			setText(text) {
@@ -104,19 +120,19 @@ var $widget = {
 			elem.type = type;
 		}
 		if(size != undefined) {
-			elem.style.fontSize = size.toString() + 'px';
+			elem.style.fontSize = size.toString() + $widget.msr;
 		}
 		return {
 			elem: elem,
 			setPosition(x, y, w, h) {
 				this.elem.style.position = 'absolute';
-				this.elem.style.top = y.toString() + 'px';
-				this.elem.style.left = x.toString() + 'px';
+				this.elem.style.top = y.toString() + $widget.msr;
+				this.elem.style.left = x.toString() + $widget.msr;
 				if(w != undefined) {
-					this.elem.style.width = w.toString() + 'px';
+					this.elem.style.width = w.toString() + $widget.msr;
 				}
 				if(h != undefined) {
-					this.elem.style.height = h.toString() + 'px';
+					this.elem.style.height = h.toString() + $widget.msr;
 				}
 			},
 			setText(text) {
@@ -124,6 +140,29 @@ var $widget = {
 			},
 			getText(text) {
 				return this.elem.value;
+			},
+			setStyle(s) {
+				this.elem.style = {...this.elem.style, ...style};
+			}
+		}
+	},
+	Section() {
+		var elem = document.createElement('div');
+		elem.style.border = '2px inset';
+		elem.style.overflow = 'auto';
+		return {
+			elem: elem,
+			el: {body: elem},  //So a section could be turned into DOM42 element
+			setPosition(x, y, w, h) {
+				this.elem.style.position = 'absolute';
+				this.elem.style.top = y.toString() + $widget.msr;
+				this.elem.style.left = x.toString() + $widget.msr;
+				if(w != undefined) {
+					this.elem.style.width = w.toString() + $widget.msr;
+				}
+				if(h != undefined) {
+					this.elem.style.height = h.toString() + $widget.msr;
+				}
 			},
 			setStyle(s) {
 				this.elem.style = {...this.elem.style, ...style};
