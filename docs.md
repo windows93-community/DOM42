@@ -66,6 +66,7 @@ Optional arguments will be marked with <...>.
  * IFrame(src)
    * setPosition(x, y, <w>, <h>)
    * setStyle(object)
+
 Section is a div element and it canbe turned to DOM42 object
 by doing the following:
 ```javascript
