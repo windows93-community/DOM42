@@ -2,7 +2,7 @@
 
 ## Introduction
 
-DOM42 is a library used which makes it easier to create GUI for
+DOM42 is a library which makes it easier to create GUI for
 Windows93 apps. It doesn't require any HTML or CSS, but all Apps
 which use the library will require the user to have it installed.
 
